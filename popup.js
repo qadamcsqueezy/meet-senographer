@@ -48,4 +48,31 @@ window.onload = function () {
       alert('Settings saved!');
     });
   });
+  document.getElementById('download-last-transcript').addEventListener('click', function () {
+    chrome.runtime.sendMessage({ action: 'getLastTranscript' }, function (response) {
+      if (response.transcript) {
+        chrome.runtime.sendMessage({
+          action: 'download',
+          content: response.transcript,
+          filename: response.title ? response.title + " Last_Transcript.txt" : 'TranscripTonic/Last_Full_Transcript.txt'
+        });
+      } else {
+        alert('No recent transcript available.');
+      }
+    });
+  });
+
+  document.getElementById('download-last-summary').addEventListener('click', function () {
+    chrome.runtime.sendMessage({ action: 'getLastSummary', }, function (response) {
+      if (response.summary) {
+        chrome.runtime.sendMessage({
+          action: 'download',
+          content: response.summary,
+          filename: response.title ? response.title + " Last_Summary.txt" : 'TranscripTonic/Last_Summary.txt'
+        });
+      } else {
+        alert('No recent summary available.');
+      }
+    });
+  });
 }

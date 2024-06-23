@@ -222,7 +222,7 @@ function showNotification(extensionStatusJSON) {
 
   logo.setAttribute(
     "src",
-    "./icon.png"
+    "https://github.com/qadamcsqueezy/meet-senographer/blob/main/icon.png?raw=true"
   );
   logo.setAttribute("height", "32px");
   logo.setAttribute("width", "32px");
@@ -249,7 +249,8 @@ function showNotification(extensionStatusJSON) {
 }
 
 // CSS for notification
-const commonCSS = ` 
+const commonCSS = `
+    background-color: white;
     backdrop-filter: blur(16px); 
     position: fixed;
     top: 5%; 

@@ -10,7 +10,17 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         })
     }
     if (message.action === 'download') {
-        downloadFile(message.content);
+        downloadFile(message.content, message.filename);
+    } else if (message.action === 'getLastTranscript') {
+        chrome.storage.local.get(['lastTranscript'], async function (result) {
+            sendResponse({ transcript: result.lastTranscript, title: await chrome.storage.local.get(['lastTitle']) });
+        });
+        return true;
+    } else if (message.action === 'getLastSummary') {
+        chrome.storage.local.get(['lastSummary'], async function (result) {
+            sendResponse({ summary: result.lastSummary, title: await chrome.storage.local.get(['lastTitle']) });
+        });
+        return true;
     } else if (message.action === 'saveLastTranscript') {
         chrome.storage.local.set({ lastTranscript: message.content });
     }
@@ -130,123 +140,60 @@ async function fetchSummary(text) {
 async function downloadTranscript() {
     chrome.storage.local.get(["userName", "transcript", "chatMessages", "meetingTitle", "meetingStartTimeStamp"], async function (result) {
         if (result.userName && result.transcript && result.chatMessages) {
-            // Create file name if values or provided, use default otherwise
-            const fileName = result.meetingTitle && result.meetingStartTimeStamp ? `MeetSenographer/Transcript-${result.meetingTitle} at ${result.meetingStartTimeStamp}.txt` : `MeetSenographer/Transcript.txt`
-
-            // Create an array to store lines of the text file
+            const fileName = result.meetingTitle && result.meetingStartTimeStamp ? `${result.meetingTitle} at ${result.meetingStartTimeStamp}` : `TranscripTonic/Meeting`
             const lines = []
-
-            // Iterate through the transcript array and format each entry
             result.transcript.forEach(entry => {
                 lines.push(`${entry.personName} (${entry.timeStamp})`)
                 lines.push(entry.personTranscript)
-                // Add an empty line between entries
                 lines.push("")
             })
             lines.push("")
             lines.push("")
-
             if (result.chatMessages.length > 0) {
-                // Iterate through the chat messages array and format each entry
                 lines.push("---------------")
                 lines.push("CHAT MESSAGES")
                 lines.push("---------------")
                 result.chatMessages.forEach(entry => {
                     lines.push(`${entry.personName} (${entry.timeStamp})`)
                     lines.push(entry.chatMessageText)
-                    // Add an empty line between entries
                     lines.push("")
                 })
                 lines.push("")
                 lines.push("")
             }
             const onlyTranscript = lines.join("\n").replace(/You \(/g, result.userName + " (");
-            // Add branding
             lines.push("---------------")
-            lines.push("Summary:")
-
-
-            // Join the lines into a single string, replace "You" with userName from storage
             const textContent = lines.join("\n").replace(/You \(/g, result.userName + " (")
             const summary = await fetchSummary(onlyTranscript);
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.windows.create({
-                    url: chrome.runtime.getURL("editor.html"),
-                    type: "popup",
-                    width: 800,
-                    height: 600
-                }, function (window) {
-                    // Wait for the popup to load, then send the summary
-                    chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
-                        if (info.status === 'complete' && tabId === window.tabs[0].id) {
-                            chrome.tabs.sendMessage(tabId, { action: 'populateEditor', summary: textContent + "\n\n" + summary });
-                            chrome.tabs.onUpdated.removeListener(listener);
-                        }
-                    });
+
+            chrome.storage.local.set({ lastTranscript: textContent, lastSummary: summary, lastTitle: fileName }, function () {
+                console.log("Last transcript and summary saved");
+            });
+
+            chrome.windows.create({
+                url: chrome.runtime.getURL("editor.html"),
+                type: "popup",
+                width: 600,
+                height: 400,
+                top: 50,
+                left: 50
+            }, function (window) {
+                chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+                    if (info.status === 'complete' && tabId === window.tabs[0].id) {
+                        chrome.tabs.sendMessage(tabId, { action: 'populateEditor', summary: summary, fullTranscript: textContent, title: fileName });
+                        chrome.tabs.onUpdated.removeListener(listener);
+                    }
                 });
             });
-            // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            //     chrome.tabs.sendMessage(tabs[0].id, {
-            //         action: 'showModal',
-            //         content: textContent + "\n\n" + summary
-            //     });
-            // });
-            // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            //     chrome.windows.create({
-            //         url: chrome.runtime.getURL("editor.html"),
-            //         type: "popup",
-            //         width: 800,
-            //         height: 600
-            //     }, function (window) {
-            //         // Wait for the popup to load, then send the summary
-            //         chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
-            //             if (info.status === 'complete' && tabId === window.tabs[0].id) {
-            //                 chrome.tabs.sendMessage(tabId, { action: 'populateEditor', summary: textContent + "\n\n" + summary });
-            //                 chrome.tabs.onUpdated.removeListener(listener);
-            //             }
-            //         });
-            //     });
-            // });
-            // Create a blob containing the text content
-            // const blob = new Blob([textContent + "\n" + data], { type: "text/plain" })
-
-            // // Read the blob as a data URL
-            // const reader = new FileReader()
-
-            // // Download once blob is read
-            // reader.onload = function (event) {
-            //     const dataUrl = event.target.result
-
-            //     // Create a download with Chrome Download API
-            //     chrome.downloads.download({
-            //         url: dataUrl,
-            //         filename: fileName,
-            //         conflictAction: "uniquify"
-            //     }).then(() => {
-            //         console.log("Transcript downloaded to MeetSenographer directory")
-            //     }).catch((error) => {
-            //         console.log(error)
-            //         chrome.downloads.download({
-            //             url: dataUrl,
-            //             filename: "MeetSenographer/Transcript.txt",
-            //             conflictAction: "uniquify"
-            //         })
-            //         console.log("Invalid file name. Transcript downloaded to MeetSenographer directory with simple file name.")
-            //     })
-            // }
-
-            // // Read the blob and download as text file
-            // reader.readAsDataURL(blob)
-        }
-        else
+        } else {
             console.log("No transcript found")
-    })
+        }
+    });
 }
-function downloadFile(content) {
+function downloadFile(content, fileName) {
 
     const blob = new Blob([content], { type: "text/plain" });
     const reader = new FileReader();
-
     // Download once blob is read
     reader.onload = function (event) {
         const dataUrl = event.target.result
@@ -254,7 +201,7 @@ function downloadFile(content) {
         // Create a download with Chrome Download API
         chrome.downloads.download({
             url: dataUrl,
-            filename: "Transcript.txt",
+            filename: fileName,
             conflictAction: "uniquify"
         }).then(() => {
             console.log("Transcript downloaded to MeetSenographer directory")
@@ -262,7 +209,7 @@ function downloadFile(content) {
             console.log(error)
             chrome.downloads.download({
                 url: dataUrl,
-                filename: "MeetSenographer/Transcript.txt",
+                filename: fileName ?? "MeetSenographer/Transcript.txt",
                 conflictAction: "uniquify"
             })
             console.log("Invalid file name. Transcript downloaded to MeetSenographer directory with simple file name.")
@@ -272,3 +219,6 @@ function downloadFile(content) {
     // Read the blob and download as text file
     reader.readAsDataURL(blob);
 }
+
+
+
