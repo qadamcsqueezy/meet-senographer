@@ -1,6 +1,6 @@
-<!-- popup.html -->
 <!DOCTYPE html>
 <html>
+
 
 <head>
   <title>Meet Stenographer</title>
@@ -8,129 +8,195 @@
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
 
     body {
-      width: 640px;
-      padding: 3rem;
-      /* background: #071f29; */
-      /* color: #2A9ACA; */
-      font-family: "Outfit", sans-serif;
+      width: 320px;
+      padding: 1rem;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'%3E%3Cdefs%3E%3Ccircle stroke='%231F6F92' vector-effect='non-scaling-stroke' id='a' fill='none' stroke-width='4.1' r='315'/%3E%3Cuse id='f' href='%23a' stroke-dasharray='100 100 100 9999'/%3E%3Cuse id='b' href='%23a' stroke-dasharray='250 250 250 250 250 9999'/%3E%3Cuse id='e' href='%23a' stroke-dasharray='1000 500 1000 500 9999'/%3E%3Cuse id='g' href='%23a' stroke-dasharray='1500 9999'/%3E%3Cuse id='h' href='%23a' stroke-dasharray='2000 500 500 9999'/%3E%3Cuse id='j' href='%23a' stroke-dasharray='800 800 800 800 800 9999'/%3E%3Cuse id='k' href='%23a' stroke-dasharray='1200 1200 1200 1200 1200 9999'/%3E%3Cuse id='l' href='%23a' stroke-dasharray='1600 1600 1600 1600 1600 9999'/%3E%3C/defs%3E%3Cg transform='translate(1000 750)' stroke-opacity='0.1'%3E%3Cg %3E%3Ccircle fill='%231F6F92' fill-opacity='0.1' r='10'/%3E%3Cg%3E%3Cuse href='%23f' transform='scale(.1) rotate(50 0 0)' /%3E%3Cuse href='%23f' transform='scale(.2) rotate(100 0 0)' /%3E%3Cuse href='%23f' transform='scale(.3) rotate(150 0 0)' /%3E%3C/g%3E%3Cg transform=''%3E%3Cuse href='%23b' transform='scale(.4) rotate(200 0 0)' /%3E%3Cuse href='%23z' transform='scale(.5) rotate(250 0 0)' /%3E%3C/g%3E%3Cg id='z' transform=''%3E%3Cg transform=''%3E%3Cuse href='%23b'/%3E%3Cuse href='%23b' transform='scale(1.2) rotate(90 0 0)' /%3E%3Cuse href='%23b' transform='scale(1.4) rotate(60 0 0)' /%3E%3Cuse href='%23e' transform='scale(1.6) rotate(120 0 0)' /%3E%3Cuse href='%23e' transform='scale(1.8) rotate(30 0 0)' /%3E%3C/g%3E%3C/g%3E%3Cg id='y' transform=''%3E%3Cg transform=''%3E%3Cuse href='%23e' transform='scale(1.1) rotate(20 0 0)' /%3E%3Cuse href='%23g' transform='scale(1.3) rotate(-40 0 0)' /%3E%3Cuse href='%23g' transform='scale(1.5) rotate(60 0 0)' /%3E%3Cuse href='%23h' transform='scale(1.7) rotate(-80 0 0)' /%3E%3Cuse href='%23j' transform='scale(1.9) rotate(100 0 0)' /%3E%3C/g%3E%3C/g%3E%3Cg transform=''%3E%3Cg transform=''%3E%3Cg transform=''%3E%3Cuse href='%23h' transform='scale(2) rotate(60 0 0)'/%3E%3Cuse href='%23j' transform='scale(2.1) rotate(120 0 0)'/%3E%3Cuse href='%23j' transform='scale(2.3) rotate(180 0 0)'/%3E%3Cuse href='%23h' transform='scale(2.4) rotate(240 0 0)'/%3E%3Cuse href='%23j' transform='scale(2.5) rotate(300 0 0)'/%3E%3C/g%3E%3Cuse href='%23y' transform='scale(2) rotate(180 0 0)' /%3E%3Cuse href='%23j' transform='scale(2.7)'/%3E%3Cuse href='%23j' transform='scale(2.8) rotate(45 0 0)'/%3E%3Cuse href='%23j' transform='scale(2.9) rotate(90 0 0)'/%3E%3Cuse href='%23k' transform='scale(3.1) rotate(135 0 0)'/%3E%3Cuse href='%23k' transform='scale(3.2) rotate(180 0 0)'/%3E%3C/g%3E%3Cuse href='%23k' transform='scale(3.3) rotate(225 0 0)'/%3E%3Cuse href='%23k' transform='scale(3.5) rotate(270 0 0)'/%3E%3Cuse href='%23k' transform='scale(3.6) rotate(315 0 0)'/%3E%3Cuse href='%23k' transform='scale(3.7)'/%3E%3Cuse href='%23k' transform='scale(3.9) rotate(75 0 0)'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       background-attachment: fixed;
       background-repeat: no-repeat;
+      background-position: center;
       background-size: cover;
+      font-family: "Outfit", sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
     }
 
-    hr {
-      /* border-color: #2A9ACA; */
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
     }
 
-    .get-started {
-      padding: 0.5rem 1rem;
-      background-color: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(4px);
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      text-align: left;
+    .header img {
+      width: 32px;
+      height: 32px;
+      margin-right: 0.5rem;
+    }
+
+    .header h1 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .tab-container {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem;
+      background-color: #ddd;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+
+    .tab.active {
+      background-color: #2A9ACA;
+      color: white;
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    p,
+    ul {
+      font-size: 0.9rem;
+      margin: 0 0 0.5rem 0;
     }
 
     ul {
-      padding-inline-start: 20px;
-      font-size: 1rem;
+      padding-left: 1.5rem;
     }
 
-    p {
-      font-size: 1rem;
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
     }
 
-    img {
-      /* border-radius: 96px; */
-    }
-
-    input {
-      /* accent-color: #2A9ACA; */
-      width: 18px;
+    .button-container a {
+      font-size: 0.5rem;
+      color: #ffffff;
+      text-decoration: none;
+      background-color: #2A9ACA;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      text-align: center;
+      white-space: nowrap;
     }
 
     label {
-      margin: 0px;
+      display: block;
       margin-bottom: 0.25rem;
-      font-size: 1.25rem;
+      font-size: 0.9rem;
     }
 
-    a {
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #2A9ACA;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .settings-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+
+    .footer {
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .footer a {
       color: #2A9ACA;
-      font-weight: bold;
-      font-size: 1rem;
-      text-underline-offset: 4px;
+      text-decoration: none;
+    }
+
+    .api-key-link {
+      font-size: 0.8rem;
+      color: #2A9ACA;
+      text-decoration: none;
+      display: block;
+      margin-top: -0.25rem;
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 
 <body>
-  <div>
-    <div style="margin-bottom: 2rem;">
-      <div style="display: flex; gap: 1rem; align-items: center;">
-        <img src="./icon.png" width="48px" height="48px" alt="" />
-        <div>
-          <h1 style="margin: 0px;">Meet Stenographer</h1>
-          <p style="margin: 0px;">
-
-            Stenographer and Summarizer Google Meet transcripts. </p>
-        </div>
-      </div>
-    </div>
-
-    <hr style="margin-bottom: 2rem;" />
-
-    <!-- <div style="display: flex; gap: 0.25rem;">
-      <input type="radio" name="mode" id="auto-mode" />
-      <label><b>Auto</b> (records transcripts for all meetings)</label>
-    </div>
-    <div style="margin-bottom: 2rem; display: flex; gap: 0.25rem;">
-      <input type="radio" name="mode" id="manual-mode" />
-      <label><b>Manual</b> (switch on transcript as needed) </label>
-    </div> -->
-    <div class="get-started">
-      <h2>How to use?</h2>
-      <p>In both modes, transcript will be automatically downloaded as a text file at the end of each meeting. <b>Avoid
-          closing the meeting tab.</b></p>
-      <ul>
-        <li><b>Auto mode:</b> Automatically records transcripts for all meetings</li>
-        <li><b>Manual mode:</b> Switch on Meet Stenographer by clicking on captions icon in Google Meet (CC icon)</li>
-      </ul>
-    </div>
-    <div>
-      <div style="margin-bottom: 2.75rem">
-        <a href="" id="last-meeting-transcript">Open Editor</a>
-        &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
-        <a href="#" id="download-last-transcript">Download Last Transcript</a>
-        &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
-        <a href="#" id="download-last-summary">Download Last Summary</a>
-      </div>
-    </div>
-    <hr style="margin-top: 2rem; margin-bottom: 2rem;" />
-
-    <div style="margin-bottom: 1rem;">
-      <label for="default-prompt" style="display: block; margin-bottom: 0.5rem;">Default Prompt:</label>
-      <textarea id="default-prompt" rows="4" style="width: 100%; padding: 0.5rem;"></textarea>
-    </div>
-
-    <div style="margin-bottom: 1rem;">
-      <label for="groq-api-key" style="display: block; margin-bottom: 0.5rem;">GROQ API Key:</label>
-      <input type="text" id="groq-api-key" style="width: 100%; padding: 0.5rem;" />
-    </div>
-
-    <button id="save-settings"
-      style="padding: 0.5rem 1rem; background-color: #2A9ACA; color: white; border: none; border-radius: 4px; cursor: pointer;">Save
-      Settings</button>
+  <div class="header">
+    <img src="icon.png" alt="Meet Stenographer Logo">
+    <h1>Meet Stenographer</h1>
   </div>
-  <hr style="margin-top: 2rem; margin-bottom: 2rem;" />
 
-  <a href="https://github.com/qadamcsqueezy/meet-senographer#readme" target="_blank">Get more help</a>
-  &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
-  <a href="https://github.com/qadamcsqueezy/meet-senographer/issues" target="_blank">Report a bug</a>
-  <p style="font-size: small;">
-    Made by <span><a href="https://github.com/qadamcsqueezy" target="_blank"
-        style="font-size: small; margin: 0px;">Qada</a></span></p>
+  <div class="tab-container">
+    <button class="tab active" data-tab="how-to-use">How to Use</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </div>
+
+  <div id="how-to-use" class="content active">
+    <p>Stenographer and Summarizer for Google Meet transcripts.</p>
+    <h2>How to use?</h2>
+    <p>In both modes, transcript will be automatically downloaded as a text file at the end of each meeting. <b>Avoid
+        closing the meeting tab.</b></p>
+    <ul>
+      <li><b>Auto mode:</b> Automatically records transcripts for all meetings</li>
+      <li><b>Manual mode:</b> Switch on Meet Stenographer by clicking on captions icon in Google Meet (CC icon)</li>
+    </ul>
+    <div class="button-container">
+      <a href="#" id="last-meeting-transcript">Open Editor</a>
+      <a href="#" id="download-last-transcript">Download Last Transcript</a>
+      <a href="#" id="download-last-summary">Download Last Summary</a>
+    </div>
+  </div>
+
+  <div id="settings" class="content">
+    <h2>Settings</h2>
+    <label for="default-prompt">Default Prompt:</label>
+    <textarea id="default-prompt" rows="4"></textarea>
+
+    <label for="groq-api-key">Groq API Key:</label>
+    <a href="https://console.groq.com/docs/api-keys" target="_blank" class="api-key-link">How to generate Groq API
+      key</a>
+    <input type="text" id="groq-api-key">
+
+    <div class="settings-footer">
+      <button id="save-settings">Save Settings</button>
+    </div>
+    <div id="status-message" class="status-message"></div>
+  </div>
+
+  <div class="footer">
+    <a href="https://github.com/qadamcsqueezy/meet-senographer#readme" target="_blank">Get more help</a>
+    |
+    <a href="https://github.com/qadamcsqueezy/meet-senographer/issues" target="_blank">Report a bug</a>
+    <p>Made by <a href="https://github.com/qadamcsqueezy" target="_blank">Qada</a></p>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 

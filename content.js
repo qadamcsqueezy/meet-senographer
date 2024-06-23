@@ -258,7 +258,8 @@ const commonCSS = `
     right: 0; 
     margin-left: auto; 
     margin-right: auto;
-    max-width: 780px;  
+    max-width: 400px;  // Reduced from 780px
+    width: 90%;  // Added to ensure it's not too wide on larger screens
     z-index: 1000; 
     padding: 0rem 1rem;
     border-radius: 8px; 
@@ -266,7 +267,7 @@ const commonCSS = `
     justify-content: center; 
     align-items: center; 
     gap: 16px;  
-    font-size: 1rem; 
+    font-size: 0.9rem; 
     line-height: 1.5; 
     font-family: 'Google Sans',Roboto,Arial,sans-serif; 
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;`;

@@ -9,7 +9,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             })
         })
     }
-    if (message.action === 'download') {
+    if (message.action === 'open_editor') {
+        openEditor();
+    } if (message.action === 'download') {
         downloadFile(message.content, message.filename);
     } else if (message.action === 'getLastTranscript') {
         chrome.storage.local.get(['lastTranscript'], async function (result) {
@@ -136,6 +138,25 @@ async function fetchSummary(text) {
 
 // Call the function to execute the fetch request
 
+async function openEditor() {
+    chrome.storage.local.get(["lastTitle", "lastSummary", "lastTranscript"], async function (result) {
+        chrome.windows.create({
+            url: chrome.runtime.getURL("editor.html"),
+            type: "popup",
+            width: 620,
+            height: 550,
+            top: 50,
+            left: 50
+        }, function (window) {
+            chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+                if (info.status === 'complete' && tabId === window.tabs[0].id) {
+                    chrome.tabs.sendMessage(tabId, { action: 'populateEditor', summary: result.lastSummary, fullTranscript: result.lastTranscript, title: result.lastTitle });
+                    chrome.tabs.onUpdated.removeListener(listener);
+                }
+            });
+        });
+    });
+}
 // Call the function to execute the fetch request
 async function downloadTranscript() {
     chrome.storage.local.get(["userName", "transcript", "chatMessages", "meetingTitle", "meetingStartTimeStamp"], async function (result) {
@@ -173,8 +194,8 @@ async function downloadTranscript() {
             chrome.windows.create({
                 url: chrome.runtime.getURL("editor.html"),
                 type: "popup",
-                width: 600,
-                height: 400,
+                width: 620,
+                height: 550,
                 top: 50,
                 left: 50
             }, function (window) {

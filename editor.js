@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         }
     });
-
+    document.getElementById('closeBtn').addEventListener('click', function () {
+        window.close();
+    });
     copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(editor.value).then(() => {
             showStatus('Summary copied to clipboard!');
